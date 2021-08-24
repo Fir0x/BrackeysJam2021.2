@@ -19,10 +19,11 @@ public class DungeonGenerator : MonoBehaviour
 
     private void Start()
     {
-        CreateRoom();
+        //CreateRoom();
+        StartCoroutine(RoomCreationTest());
     }
 
-    /*private IEnumerator RoomCreationTest()
+    private IEnumerator RoomCreationTest()
     {
         yield return new WaitForSeconds(2);
         for (int i = 0; i < 25; i++)
@@ -30,7 +31,7 @@ public class DungeonGenerator : MonoBehaviour
             CreateRoom();
             yield return new WaitForSeconds(0.5f);
         }
-    }*/
+    }
 
     private sealed class RoomData
     {
@@ -74,6 +75,11 @@ public class DungeonGenerator : MonoBehaviour
                 || targetPosition + Vector2.right == _position
                 || targetPosition + Vector2.left == _position;
         }
+
+        public DoorAdapter GetDoorAdapter()
+        {
+            return _room.gameObject.GetComponent<DoorAdapter>();
+        }
     }
 
     public void CreateRoom()
@@ -103,12 +109,17 @@ public class DungeonGenerator : MonoBehaviour
 
         createdRoom.gameObject.name = "Room " + _roomList.Count;
 
-        foreach (RoomData room in _availableRooms.FindAll(room => room.IsNeighbour(roomPosition)))
+        foreach (RoomData roomData in _availableRooms.FindAll(room => room.IsNeighbour(roomPosition)))
         {
-            createdRoomData.AddExtension(room.Position);
-            room.AddExtension(roomPosition);
-            if (!room.IsAvailableForExtension())
-                _availableRooms.Remove(room);
+            DirectionLib.Direction doorDirection = DirectionLib.GetDirectionFromVector2(roomData.Position - createdRoomData.Position);
+            createdRoomData.AddExtension(roomData.Position);
+            createdRoom.gameObject.GetComponent<DoorAdapter>()?.SetDoor(_roomSize, doorDirection);
+
+            roomData.AddExtension(roomPosition);
+            roomData.GetDoorAdapter()?.SetDoor(_roomSize, DirectionLib.ReverseDirection(doorDirection));
+
+            if (!roomData.IsAvailableForExtension())
+                _availableRooms.Remove(roomData);
         }
     }
 }
