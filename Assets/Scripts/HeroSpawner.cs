@@ -15,17 +15,14 @@ public class Wave
 public class HeroSpawner : MonoBehaviour
 {
     [Header("Time")] 
-    [SerializeField] private float BeginSpawnTime;
+    [SerializeField] private float beginSpawnTime;
     [Tooltip("Time between the end of a wave and the beginning of the next one")]
     [SerializeField] private float waveTime;
 
     [Header("Waves")] 
     [SerializeField] private Wave[] waves;
     private int waveNumber;
-    [Header("Heroes")] 
-    [SerializeField] GameObject[] heroes;
-    
-    
+
     //Variables for time display
     
     /*
@@ -38,7 +35,7 @@ public class HeroSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Invoke("NextWave",beginSpawnTime);
     }
 
     // Update is called once per frame
@@ -52,15 +49,17 @@ public class HeroSpawner : MonoBehaviour
         while (i < waves[waveNumber].heroes.Length)
         {
             yield return new WaitForSeconds(waves[waveNumber].heroSpawnTime);
-            
+            Debug.Log("Created hero");
+            // Instantiate(waves[waveNumber].heroes[i], waves[waveNumber].spawnPoint);
         }
-        
+        NextWave();
     }
 
     public void NextWave()
     {
+        
+        StartCoroutine(CreateWave());
         waveNumber++;
-        CreateWave();
     }
 
     IEnumerator CreateWave()
