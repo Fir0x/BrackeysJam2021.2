@@ -4,10 +4,10 @@ using UnityEngine.Tilemaps;
 public class DoorAdapter : MonoBehaviour
 {
     [SerializeField] private Tilemap walls;
-    [SerializeField] private GameObject _northDoor;
-    [SerializeField] private GameObject _southhDoor;
-    [SerializeField] private GameObject _eastDoor;
-    [SerializeField] private GameObject _westDoor;
+    [SerializeField] private Door _northDoor;
+    [SerializeField] private Door _southhDoor;
+    [SerializeField] private Door _eastDoor;
+    [SerializeField] private Door _westDoor;
 
     public void SetDoor(Vector2 roomSize, DirectionLib.Direction doorDirection)
     {
@@ -17,19 +17,19 @@ public class DoorAdapter : MonoBehaviour
         switch (doorDirection)
         {
             case DirectionLib.Direction.North:
-                _northDoor.SetActive(true);
+                _northDoor.OpenDoor();
                 walls.SetTile(new Vector3Int(0, roomHeight / 2, 0), null);
                 break;
             case DirectionLib.Direction.South:
-                _southhDoor.SetActive(true);
+                _southhDoor.OpenDoor();
                 walls.SetTile(new Vector3Int(0, -roomHeight / 2, 0), null);
                 break;
             case DirectionLib.Direction.East:
-                _eastDoor.SetActive(true);
+                _eastDoor.OpenDoor();
                 walls.SetTile(new Vector3Int(roomWidth / 2, 0, 0), null);
                 break;
             case DirectionLib.Direction.West:
-                _westDoor.SetActive(true);
+                _westDoor.OpenDoor();
                 walls.SetTile(new Vector3Int(-roomWidth / 2, 0, 0), null);
                 break;
         }

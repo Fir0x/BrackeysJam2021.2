@@ -856,10 +856,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walls: {fileID: 123882129629936788}
-  _northDoor: {fileID: 3172105248499407063}
-  _southhDoor: {fileID: 3625614546157737915}
-  _eastDoor: {fileID: 8873932195908088526}
-  _westDoor: {fileID: 4152413745470524706}
+  _northDoor: {fileID: 0}
+  _southhDoor: {fileID: 0}
+  _eastDoor: {fileID: 0}
+  _westDoor: {fileID: 0}
 --- !u!1 &6812233354688082925
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,7 +872,7 @@ GameObject:
   - component: {fileID: 123882129629936788}
   - component: {fileID: 7455704960983622571}
   - component: {fileID: 2052434247153089497}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Layer2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
