@@ -57,7 +57,10 @@ public class HeroSpawner : MonoBehaviour
 
     public void NextWave()
     {
-        
+        if (waveNumber > waves.Length)
+        {
+            GameManager.main.Win();
+        }
         StartCoroutine(CreateWave());
         waveNumber++;
     }
