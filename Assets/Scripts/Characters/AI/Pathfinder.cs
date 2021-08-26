@@ -26,7 +26,29 @@ public sealed partial class Pathfinder : MonoBehaviour
 
     private bool IsNodeNearTarget(Vector2 nodePos)
     {
-        return Mathf.Abs((_target - nodePos).magnitude) <= _stopRange;
+        return ArePositionClose(nodePos, _target);
+    }
+
+    public bool IsPositionNearNextNode(Vector2 positon)
+    {
+        return ArePositionClose(positon, _path[_currentNodeIndex]);
+    }
+
+    private bool ArePositionClose(Vector2 pos1, Vector2 pos2)
+    {
+        return Mathf.Abs((pos2 - pos1).magnitude) <= _stopRange;
+    }
+
+    public Optional<Vector2> GetNextNode()
+    {
+        if (_currentNodeIndex < _path.Count)
+        {
+            Vector2 node = _path[_currentNodeIndex];
+            _currentNodeIndex++;
+            return Optional<Vector2>.From(node);
+        }
+
+        return Optional<Vector2>.Empty();
     }
 
     private void FindPath(Vector2 targetPosition)
@@ -49,8 +71,7 @@ public sealed partial class Pathfinder : MonoBehaviour
     [SerializeField] private bool _debug = true;
     [SerializeField] private float _nodeSize = 0.1f;
     [SerializeField] private Color _nodeColor = Color.green;
-    [SerializeField] private Color _linkColor = Color.green;
-    [SerializeField] private Color _targetColor = Color.blue;
+    [SerializeField] private Color _linkColor = Color.green;s
 
     private void OnDrawGizmos()
     {
