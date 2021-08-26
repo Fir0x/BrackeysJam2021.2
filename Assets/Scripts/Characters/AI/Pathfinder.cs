@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class Pathfinder : MonoBehaviour
+public sealed partial class Pathfinder : MonoBehaviour
 {
     private Vector2 _target;
     private List<Vector2> _path;
