@@ -71,7 +71,7 @@ public sealed partial class Pathfinder : MonoBehaviour
     [SerializeField] private bool _debug = true;
     [SerializeField] private float _nodeSize = 0.1f;
     [SerializeField] private Color _nodeColor = Color.green;
-    [SerializeField] private Color _linkColor = Color.green;s
+    [SerializeField] private Color _linkColor = Color.green;
 
     private void OnDrawGizmos()
     {
