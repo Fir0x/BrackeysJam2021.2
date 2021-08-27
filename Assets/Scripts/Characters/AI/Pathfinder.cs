@@ -23,7 +23,7 @@ public sealed partial class Pathfinder : MonoBehaviour
     public void SetTarget(CharacterBaseClass target)
     {
         target.SubscribeOnMoveHandler(FindPath);
-        //FindPath(target.transform.position);
+        FindPath(target.transform.position);
     }
 
     public bool PathExists()
