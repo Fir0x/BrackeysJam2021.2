@@ -13,7 +13,7 @@ public class Optional<T>
 
     public T Get()
     {
-        if (_isPresent)
+        if (!_isPresent)
             throw new InvalidOperationException("No value is present.");
 
         return _element;
