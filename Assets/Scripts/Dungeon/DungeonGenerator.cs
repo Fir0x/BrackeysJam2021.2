@@ -19,8 +19,8 @@ public class DungeonGenerator : MonoBehaviour
 
     private void Start()
     {
-        //CreateRoom();
-        StartCoroutine(RoomCreationTest());
+        CreateRoom();
+        //StartCoroutine(RoomCreationTest());
     }
 
     private IEnumerator RoomCreationTest()
@@ -29,7 +29,7 @@ public class DungeonGenerator : MonoBehaviour
         for (int i = 0; i < 25; i++)
         {
             CreateRoom();
-            yield return new WaitForSeconds(0.5f);
+            yield return null;
         }
     }
 

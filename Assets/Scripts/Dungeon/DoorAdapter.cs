@@ -5,7 +5,7 @@ public class DoorAdapter : MonoBehaviour
 {
     [SerializeField] private Tilemap walls;
     [SerializeField] private Door _northDoor;
-    [SerializeField] private Door _southhDoor;
+    [SerializeField] private Door _southDoor;
     [SerializeField] private Door _eastDoor;
     [SerializeField] private Door _westDoor;
 
@@ -21,7 +21,7 @@ public class DoorAdapter : MonoBehaviour
                 walls.SetTile(new Vector3Int(0, roomHeight / 2, 0), null);
                 break;
             case DirectionLib.Direction.South:
-                _southhDoor.OpenDoor();
+                _southDoor.OpenDoor();
                 walls.SetTile(new Vector3Int(0, -roomHeight / 2, 0), null);
                 break;
             case DirectionLib.Direction.East:

@@ -546,6 +546,7 @@ GameObject:
   m_Component:
   - component: {fileID: 222367183371246437}
   - component: {fileID: 7975435801084264120}
+  - component: {fileID: 1210406652082354259}
   m_Layer: 0
   m_Name: NDoor
   m_TagString: Untagged
@@ -618,6 +619,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1210406652082354259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3172105248499407063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 067a396a6dd785949ab11c9da08af9c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3625614546157737915
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,6 +641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2068006742610500996}
   - component: {fileID: 4802032874067459540}
+  - component: {fileID: 8114439142772605783}
   m_Layer: 0
   m_Name: SDoor
   m_TagString: Untagged
@@ -700,6 +714,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8114439142772605783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3625614546157737915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 067a396a6dd785949ab11c9da08af9c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4152413745470524706
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,6 +736,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2202198289860473933}
   - component: {fileID: 8336744814480589620}
+  - component: {fileID: 1801988879286414888}
   m_Layer: 0
   m_Name: WDoor
   m_TagString: Untagged
@@ -782,6 +809,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1801988879286414888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4152413745470524706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 067a396a6dd785949ab11c9da08af9c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6485823302618685634
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,10 +895,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walls: {fileID: 123882129629936788}
-  _northDoor: {fileID: 0}
-  _southhDoor: {fileID: 0}
-  _eastDoor: {fileID: 0}
-  _westDoor: {fileID: 0}
+  _northDoor: {fileID: 1210406652082354259}
+  _southDoor: {fileID: 8114439142772605783}
+  _eastDoor: {fileID: 6770913554769964093}
+  _westDoor: {fileID: 1801988879286414888}
 --- !u!1 &6812233354688082925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,6 +1061,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 1, y: 0, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 4, y: 0, z: 0}
     second:
       serializedVersion: 2
@@ -1033,6 +1082,16 @@ Tilemap:
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   - first: {x: -4, y: 1, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 1, y: 1, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 0
@@ -1144,13 +1203,13 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 24
+  - m_RefCount: 26
     m_Data: {fileID: 11400000, guid: 673fcdc162adf4e408a5e0c1ff9b0e81, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 24
+  - m_RefCount: 26
     m_Data: {fileID: 2938616917662862040, guid: be34fcb5d4c98fd4a9fb98a9199d34cc, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 24
+  - m_RefCount: 26
     m_Data:
       e00: 1
       e01: 0
@@ -1169,7 +1228,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 24
+  - m_RefCount: 26
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -1269,6 +1328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5991926077029944181}
   - component: {fileID: 8286186359950239876}
+  - component: {fileID: 6770913554769964093}
   m_Layer: 0
   m_Name: EDoor
   m_TagString: Untagged
@@ -1341,6 +1401,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6770913554769964093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8873932195908088526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 067a396a6dd785949ab11c9da08af9c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3720471808476124585
 MonoBehaviour:
   m_ObjectHideFlags: 0
