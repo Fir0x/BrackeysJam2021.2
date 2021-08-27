@@ -21,8 +21,11 @@ public class HeroSpawner : MonoBehaviour
 
     [Header("Waves")] 
     [SerializeField] private Wave[] waves;
-    private int waveNumber;
+    private int waveNumber=-1;
 
+    private int numberOfHeroes;
+    public static HeroSpawner main;
+    
     //Variables for time display
     
     /*
@@ -35,7 +38,8 @@ public class HeroSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("NextWave",beginSpawnTime);
+        numberOfHeroes = 0;
+        Invoke(nameof(NextWave),beginSpawnTime);
     }
 
     // Update is called once per frame
@@ -46,29 +50,37 @@ public class HeroSpawner : MonoBehaviour
     IEnumerator CreateHeroes()//get hero from wave, produce after given seconds
     {
         int i = 0;
+        numberOfHeroes = waves[waveNumber].heroes.Length - 1;
         while (i < waves[waveNumber].heroes.Length)
         {
             yield return new WaitForSeconds(waves[waveNumber].heroSpawnTime);
             Debug.Log("Created hero");
             // Instantiate(waves[waveNumber].heroes[i], waves[waveNumber].spawnPoint);
         }
-        NextWave();
+        
     }
 
     public void NextWave()
     {
+        waveNumber++;
         if (waveNumber > waves.Length)
         {
             GameManager.main.Win();
         }
         StartCoroutine(CreateWave());
-        waveNumber++;
+       
     }
 
     IEnumerator CreateWave()
     {
         yield return new WaitForSeconds(waveTime);
         StartCoroutine(CreateHeroes());
+    }
+
+    public void KillHero()
+    {
+        numberOfHeroes--;
+        if (numberOfHeroes == 0) NextWave();
     }
     
 }
