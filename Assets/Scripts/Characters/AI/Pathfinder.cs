@@ -75,9 +75,10 @@ public sealed partial class Pathfinder : MonoBehaviour
         MinHeap<Node> openSet = new MinHeap<Node>();
         Node startNode = new Node(transform.position, _stepBetweenNode, _stopRange, _wallsMask);
         openSet.Push(startNode);
-        HashSet<Node> closedSet = new HashSet<Node>();
+        List<Node> closedSet = new List<Node>();
 
         Node current;
+
         while (openSet.Count > 0)
         {
             current = openSet.Pop();
@@ -108,8 +109,8 @@ public sealed partial class Pathfinder : MonoBehaviour
             }
         }
 
-        Debug.LogWarning($"No path was found from {gameObject.name} (id: {gameObject.GetInstanceID()})" +
-                         $"to {gameObject.name} (id: {gameObject.GetInstanceID()})");
+        Debug.Log($"No path was found for {gameObject.name} (id: {gameObject.GetInstanceID()}) " +
+                         $"from {transform.position} to {targetPosition}");
     }
 
 #if UNITY_EDITOR
@@ -124,7 +125,7 @@ public sealed partial class Pathfinder : MonoBehaviour
         if (_debug && _path != null)
         {
             Vector2 prevPos = transform.position;
-            for (int i = _currentNodeIndex; i < _path.Count; i++)
+            for (int i = _currentNodeIndex == -1 ? 0 : _currentNodeIndex; i < _path.Count; i++)
             {
                 Vector2 nextPos = _path[i];
                 Gizmos.color = _nodeColor;

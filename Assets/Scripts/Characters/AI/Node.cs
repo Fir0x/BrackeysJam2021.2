@@ -75,6 +75,7 @@ public partial class Pathfinder
                 _neighbours = new List<Node>();
                 if (IsWalkable())
                 {
+                    int i = 0;
                     for (float y = -_step; y <= _step; y += _step)
                     {
                         for (float x = -_step; x <= _step; x += _step)
@@ -84,6 +85,7 @@ public partial class Pathfinder
 
                             Node neighbour = new Node(new Vector2(_position.x + x, _position.y + y), _step, _checkRadius, _checkMask);
                             _neighbours.Add(neighbour);
+                            i++;
                         }
                     }
                 }
@@ -112,7 +114,7 @@ public partial class Pathfinder
 
         public bool Equals(Node other)
         {
-            return _position == other.Position;
+            return other != null && _position == other.Position;
         }
     }
 }

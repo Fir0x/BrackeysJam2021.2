@@ -7,13 +7,11 @@ public partial class Pathfinder
     public class MinHeap<T> where T : IComparable
     {
         private List<T> _items;
-        private HashSet<T> _itemsChecker;
         public int Count { get => _items.Count; }
 
         public MinHeap()
         {
             _items = new List<T>();
-            _itemsChecker = new HashSet<T>();
         }
 
         public void Push(T e)
@@ -89,7 +87,7 @@ public partial class Pathfinder
 
         public bool Contains(T e)
         {
-            return _itemsChecker.Contains(e);
+            return _items.Contains(e);
         }
     }
 }
