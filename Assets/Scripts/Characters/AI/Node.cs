@@ -51,16 +51,16 @@ public partial class Pathfinder
 
         public static float Distance(Node node, Vector2 otherPosition)
         {
-            const int baseFactor = 10;
-            const int diagonalFactor = 14;
+            float distX = node.Position.x - otherPosition.x;
+            float distY = node.Position.y - otherPosition.y;
 
-            float distX = Mathf.Abs(node.Position.x - otherPosition.x);
-            float distY = Mathf.Abs(node.Position.y - otherPosition.y);
+            return Mathf.Abs(distX) + Mathf.Abs(distY); // Manhattan distance
+            //return Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2)); // Euclidian distance
 
-            if (distX > distY)
-                return diagonalFactor * distY + baseFactor * (distX - distY);
-
-            return diagonalFactor * distX + baseFactor * (distY - distX);
+            //distX = Mathf.Abs(distX);
+            //distY = Mathf.Abs(distY);
+            //return 1 * (distX + distY) + (1 - 2 * 1) * Mathf.Min(distX, distY); // Chebyshev distance
+            //return 1 * (distX + distY) + (Mathf.Sqrt(2) - 2 * 1) * Mathf.Min(distX, distY); // Octile distance
         }
 
         public bool IsWalkable()

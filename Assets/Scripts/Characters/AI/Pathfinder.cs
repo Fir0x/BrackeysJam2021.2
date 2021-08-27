@@ -8,7 +8,7 @@ public sealed partial class Pathfinder : MonoBehaviour
     private List<Vector2> _path;
     private int _currentNodeIndex;
 
-    [SerializeField] private int _nodePerUnit = 1;
+    [SerializeField] private float _nodePerUnit = 1;
     [SerializeField] private LayerMask _wallsMask;
     [SerializeField] private float _stopRange = 0.5f;
 

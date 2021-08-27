@@ -13,20 +13,21 @@ public class DungeonGenerator : MonoBehaviour
 
     private void Awake()
     {
+        Random.InitState(544572923);
         _roomList = new List<RoomData>();
         _availableRooms = new List<RoomData>();
     }
 
     private void Start()
     {
-        CreateRoom();
-        //StartCoroutine(RoomCreationTest());
+        //CreateRoom();
+        StartCoroutine(RoomCreationTest());
     }
 
     private IEnumerator RoomCreationTest()
     {
         yield return new WaitForSeconds(2);
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 50; i++)
         {
             CreateRoom();
             yield return null;
@@ -50,6 +51,11 @@ public class DungeonGenerator : MonoBehaviour
             _freeSpaces.Add(position + Vector2.down);
             _freeSpaces.Add(position + Vector2.right);
             _freeSpaces.Add(position + Vector2.left);
+        }
+
+        public bool IsDataOf(Room room)
+        {
+            return _room == room;
         }
 
         public bool IsAvailableForExtension()
@@ -84,6 +90,7 @@ public class DungeonGenerator : MonoBehaviour
 
     public void CreateRoom()
     {
+        RoomData parentRoomData = null;
         Vector2 roomPosition;
         GameObject roomToCreate;
         if (_availableRooms.Count == 0)
@@ -93,7 +100,8 @@ public class DungeonGenerator : MonoBehaviour
         }
         else
         {
-            roomPosition = _availableRooms[Random.Range(0, _availableRooms.Count)].GetRandomFreeSpace();
+            parentRoomData = _availableRooms[Random.Range(0, _availableRooms.Count)];
+            roomPosition = parentRoomData.GetRandomFreeSpace();
             roomToCreate = _roomPrefabs[Random.Range(0, _roomPrefabs.Count)];
         }
 
@@ -109,7 +117,7 @@ public class DungeonGenerator : MonoBehaviour
 
         createdRoom.gameObject.name = "Room " + _roomList.Count;
 
-        foreach (RoomData roomData in _availableRooms.FindAll(room => room.IsNeighbour(roomPosition)))
+        /*foreach (RoomData roomData in _availableRooms.FindAll(room => room.IsNeighbour(roomPosition)))
         {
             DirectionLib.Direction doorDirection = DirectionLib.GetDirectionFromVector2(roomData.Position - createdRoomData.Position);
             createdRoomData.AddExtension(roomData.Position);
@@ -120,6 +128,25 @@ public class DungeonGenerator : MonoBehaviour
 
             if (!roomData.IsAvailableForExtension())
                 _availableRooms.Remove(roomData);
+        }*/
+
+        if (parentRoomData != null)
+        {
+            foreach (RoomData neighbourData in _availableRooms.FindAll(room => room.IsNeighbour(roomPosition)))
+            {
+                createdRoomData.AddExtension(neighbourData.Position);
+                neighbourData.AddExtension(roomPosition);
+                if (!neighbourData.IsAvailableForExtension())
+                    _availableRooms.Remove(neighbourData);
+            }
+
+            DirectionLib.Direction doorDirection = DirectionLib.GetDirectionFromVector2(parentRoomData.Position - createdRoomData.Position);
+
+            createdRoom.gameObject.GetComponent<DoorAdapter>()?.SetDoor(_roomSize, doorDirection);
+            parentRoomData.GetDoorAdapter()?.SetDoor(_roomSize, DirectionLib.ReverseDirection(doorDirection));
+
+            if (!parentRoomData.IsAvailableForExtension())
+                _availableRooms.Remove(parentRoomData);
         }
     }
 }
