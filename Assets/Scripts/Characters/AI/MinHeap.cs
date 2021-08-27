@@ -40,6 +40,13 @@ public partial class Pathfinder
             _items[j] = tmp;
         }
 
+        public void UpdateItem(T item)
+        {
+            int itemIndex = _items.IndexOf(item);
+            if (itemIndex != -1)
+                SortTopBottom(itemIndex);
+        }
+
         private void SortBottomTop()
         {
             int i = _items.Count - 1;
@@ -52,12 +59,12 @@ public partial class Pathfinder
             }
         }
 
-        private void SortTopBottom()
+        private void SortTopBottom(int startIndex = 0)
         {
             if (_items.Count < 2)
                 return;
 
-            int i = 0;
+            int i = startIndex;
             bool isPlaced = false;
 
             while (_items.Count / 2 > i && !isPlaced)

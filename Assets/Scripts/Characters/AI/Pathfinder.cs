@@ -12,9 +12,11 @@ public sealed partial class Pathfinder : MonoBehaviour
     [SerializeField] private LayerMask _wallsMask;
     [SerializeField] private float _stopRange = 0.5f;
 
+    private float _stepBetweenNode { get => 1f / _nodePerUnit; }
+
     private void Awake()
     {
-        _currentNodeIndex = 0;
+        _currentNodeIndex = -1;
         _path = new List<Vector2>();
     }
 
@@ -22,6 +24,23 @@ public sealed partial class Pathfinder : MonoBehaviour
     {
         target.SubscribeOnMoveHandler(FindPath);
         //FindPath(target.transform.position);
+    }
+
+    public bool PathExists()
+    {
+        return _path.Count > 0;
+    }
+
+    public Optional<Vector2> GetNextNode()
+    {
+        _currentNodeIndex++;
+        if (_currentNodeIndex < _path.Count)
+        {
+            Vector2 node = _path[_currentNodeIndex];
+            return Optional<Vector2>.From(node);
+        }
+
+        return Optional<Vector2>.Empty();
     }
 
     private bool IsNodeNearTarget(Vector2 nodePos)
@@ -39,31 +58,58 @@ public sealed partial class Pathfinder : MonoBehaviour
         return Mathf.Abs((pos2 - pos1).magnitude) <= _stopRange;
     }
 
-    public Optional<Vector2> GetNextNode()
+    private void ReconstructPath(Node startNode, Node endNode)
     {
-        if (_currentNodeIndex < _path.Count)
+        Node current = endNode;
+        while (current != startNode)
         {
-            Vector2 node = _path[_currentNodeIndex];
-            _currentNodeIndex++;
-            return Optional<Vector2>.From(node);
+            _path.Insert(0, current.Position);
+            current = current.Parent;
         }
-
-        return Optional<Vector2>.Empty();
     }
 
     private void FindPath(Vector2 targetPosition)
     {
-        _target = targetPosition;
+        _currentNodeIndex = -1;
         _path.Clear();
-        float stepBetweenNode = 1f / _nodePerUnit;
-        Vector2 nodePosition = transform.position;
-        int step = 50;
-        do
+        MinHeap<Node> openSet = new MinHeap<Node>();
+        Node startNode = new Node(transform.position, _stepBetweenNode, _stopRange, _wallsMask);
+        openSet.Push(startNode);
+        HashSet<Node> closedSet = new HashSet<Node>();
+
+        Node current;
+        while (openSet.Count > 0)
         {
-            nodePosition += (targetPosition - nodePosition).normalized * stepBetweenNode;
-            _path.Add(nodePosition);
-            step--;
-        } while (!IsNodeNearTarget(nodePosition) && step > 0);
+            current = openSet.Pop();
+            if (ArePositionClose(current.Position, targetPosition))
+            {
+                ReconstructPath(startNode, current);
+                return;
+            }
+
+            closedSet.Add(current);
+
+            foreach (Node neighbour in current.GetNeighbours())
+            {
+                if (closedSet.Contains(neighbour) || !neighbour.IsWalkable())
+                    continue;
+
+                float distanceToNeighbour = Node.Distance(current, neighbour);
+                if (distanceToNeighbour < neighbour.GCost)
+                {
+                    neighbour.GCost = distanceToNeighbour;
+                    neighbour.HCost = Node.Distance(neighbour, targetPosition);
+                    neighbour.Parent = current;
+                    if (openSet.Contains(neighbour))
+                        openSet.UpdateItem(neighbour);
+                    else
+                        openSet.Push(neighbour);
+                }
+            }
+        }
+
+        Debug.LogWarning($"No path was found from {gameObject.name} (id: {gameObject.GetInstanceID()})" +
+                         $"to {gameObject.name} (id: {gameObject.GetInstanceID()})");
     }
 
 #if UNITY_EDITOR
