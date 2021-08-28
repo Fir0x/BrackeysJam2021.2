@@ -13,12 +13,9 @@ public class DungeonManager : MonoBehaviour
     private DungeonGenerator _generator;
     private int _waveCount = 0;
 
-    private List<CharacterBaseClass> _stunnable;
-
     private void Awake()
     {
         _generator = GetComponent<DungeonGenerator>();
-        _stunnable = new List<CharacterBaseClass>();
     }
 
     public void NextWave()
@@ -27,17 +24,9 @@ public class DungeonManager : MonoBehaviour
         print($"Wave {_waveCount} starts");
     }
 
-    public void RegisterStunnable(CharacterBaseClass character)
-    {
-        _stunnable.Add(character);
-    }
-
     public void Blackout()
     {
-        _stunnable.RemoveAll(character => character == null);
         PerformBlackout();
-        foreach (CharacterBaseClass character in _stunnable)
-            character.Stun();
     }
 
     private IEnumerator PerformBlackout()

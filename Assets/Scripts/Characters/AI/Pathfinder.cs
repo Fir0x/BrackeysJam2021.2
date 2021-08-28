@@ -20,12 +20,6 @@ public sealed partial class Pathfinder : MonoBehaviour
         _path = new List<Vector2>();
     }
 
-    public void SetTarget(CharacterBaseClass target)
-    {
-        target.SubscribeOnMoveHandler(FindPath);
-        FindPath(target.transform.position);
-    }
-
     public bool PathExists()
     {
         return _path.Count > 0;
@@ -68,7 +62,7 @@ public sealed partial class Pathfinder : MonoBehaviour
         }
     }
 
-    private void FindPath(Vector2 targetPosition)
+    public void FindPath(Vector2 targetPosition)
     {
         _currentNodeIndex = -1;
         _path.Clear();
