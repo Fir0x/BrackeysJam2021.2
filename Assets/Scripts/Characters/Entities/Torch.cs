@@ -22,13 +22,13 @@ public class Torch : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        Player player = other.GetComponent<Player>();
+        Player player = collision.GetComponent<Player>();
         if (player != null)
         {
-            //float distance = Vector2.Distance(transform.position, player.transform.position);
-            int damage = (int)((_damageZoneRadius - other.contactOffset) * _damageScaling + _startDamage);
+            float distance = Vector2.Distance(transform.position, collision.ClosestPoint(transform.position));
+            int damage = (int)(((_damageZoneRadius - distance) * _damageScaling + 1) * _startDamage);
             player.Damage(damage);
         }
     }

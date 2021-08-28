@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int _maxHp;
+    [SerializeField] private int _maxHp = 100;
     private int _hp;
     [SerializeField] private int _hpScaling = 10;
 
@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
 
     public void Damage(int amount)
     {
+        print($"Taking damages: {amount}");
         if (amount < 0)
             return;
 
