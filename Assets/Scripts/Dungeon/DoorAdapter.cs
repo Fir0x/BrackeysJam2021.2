@@ -59,7 +59,6 @@ public class DoorAdapter : MonoBehaviour
                 _walls.SetTile(new Vector3Int(midWidth, 0, 0), null);
                 break;
             case DirectionLib.Direction.West:
-                print(midWidth);
                 _walls.SetTile(new Vector3Int(roomWidth % 2 == 0 ? -midWidth + 1 : -midWidth, 0, 0), null);
                 break;
         }
