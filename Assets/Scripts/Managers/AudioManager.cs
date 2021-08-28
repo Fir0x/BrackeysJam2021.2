@@ -7,7 +7,9 @@ public enum SoundEffects
    hit,
    loss,
    waveEnd,
-   waveStart
+   waveStart,
+   win,
+   monsterSpawn
 };
 public class AudioManager : MonoBehaviour
 {
@@ -98,10 +100,16 @@ public class AudioManager : MonoBehaviour
 			case SoundEffects.waveStart:
 				sfxSource.PlayOneShot(waveStart);
 				break;
+			case SoundEffects.win:
+				sfxSource.PlayOneShot(waveEnd);
+				break;
+			case SoundEffects.monsterSpawn:
+				sfxSource.PlayOneShot(waveEnd);
+				break;
 			case SoundEffects.waveEnd:
 				sfxSource.PlayOneShot(waveEnd);
 				break;
-			
+
 			default: break;
 		}
 	}

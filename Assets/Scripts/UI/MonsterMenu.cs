@@ -39,6 +39,7 @@ public class MonsterMenu : MonoBehaviour
             SoulManager.main.ReduceSouls(monsters[mNumber].soulCost);
             Instantiate(monsters[mNumber].monster, spawnPoint.position, spawnPoint.rotation);
             Debug.Log("Summon monster: " + mNumber);
+            AudioManager.main.PlaySoundEffect(SoundEffects.monsterSpawn);
         }
     }
 

@@ -26,6 +26,7 @@ public class HealthManager : MonoBehaviour
     public void ReduceHealth(int reduction)
     {
         currentHealth= Mathf.Max(currentHealth-reduction,0);
+        if(currentHealth<=0)GameManager.main.Loss();
         UpdateBar();
     }
 

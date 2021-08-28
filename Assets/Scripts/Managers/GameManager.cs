@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public void Loss()
     {
         losePanel.SetActive(true);
+        AudioManager.main.PlaySoundEffect(SoundEffects.loss);
         //play sound indicating loss
         //do all the other things for loss
     }
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
     public void Win()
     {
         winPanel.SetActive(true);
+        AudioManager.main.PlaySoundEffect(SoundEffects.win);
         //play sound indicating loss
         //do all the other things for win
     }

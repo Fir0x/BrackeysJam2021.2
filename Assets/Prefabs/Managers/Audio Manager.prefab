@@ -49,7 +49,7 @@ MonoBehaviour:
   sfxMixer: {fileID: 24100000, guid: 549997e247bc87b45862cb786ecdc0b9, type: 2}
   musicVolume: 0.5
   sfxVolume: 0.2
-  MainMenuMusic: {fileID: 8300000, guid: b05d46009a3bbb549a3a66a16aa7f02b, type: 3}
+  MainMenuMusic: {fileID: 8300000, guid: dbcb1bf5ee3980d4587f0a317a799850, type: 3}
   MainGameMusic: {fileID: 8300000, guid: de2a033ce53ea0b4a990afcd545c84d5, type: 3}
   isInMainMenuScene: 0
   hit: {fileID: 8300000, guid: 9aebdaa6f5456e84593bda3cd65429fb, type: 3}
