@@ -8,13 +8,13 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float _speed;
     private int _damage;
     [SerializeField] private LayerMask _collisionMask;
-    private Type _shooterType;
+    private bool _isFromHero;
 
-    public void SetupProjectile(Vector2 direction, int damage, Type shooterType)
+    public void SetupProjectile(Vector2 direction, int damage, bool isFromHero)
     {
         _direction = direction;
         _damage = damage;
-        _shooterType = shooterType;
+        _isFromHero = isFromHero;
     }
 
     private void Update()
@@ -28,8 +28,11 @@ public class Projectile : MonoBehaviour
         CharacterBaseClass character = collision.GetComponent<CharacterBaseClass>();
         if (character != null)
         {
-            if (character.GetType() != _shooterType)
+            if ((_isFromHero && character is IMonster) || (!_isFromHero && character is IHero))
+            {
                 character.Damage(_damage);
+                Destroy(gameObject);
+            }
         }
     }
 }
