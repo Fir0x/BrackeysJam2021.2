@@ -6,6 +6,9 @@ public class TestTarget : CharacterBaseClass
 {
     [SerializeField] private Pathfinder pathfinder;
 
+    public override void Attack(Vector2 direction)
+    { }
+
     private void Start()
     {
         pathfinder.SetTarget(this);

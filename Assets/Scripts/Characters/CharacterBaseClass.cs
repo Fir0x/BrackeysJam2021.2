@@ -10,9 +10,10 @@ public abstract class CharacterBaseClass : MonoBehaviour
     [SerializeField] protected int _health;
     [SerializeField] protected int _moveSpeed;
 
+    [SerializeField] protected int _attack;
     [SerializeField] protected int _attackSpeed;
     [Tooltip("Range of attack")]
-    [SerializeField] protected int range;
+    [SerializeField] protected int _range;
 
     [Tooltip("How long is the character stunned?")]
     [SerializeField] protected int _stunTime;
@@ -26,9 +27,11 @@ public abstract class CharacterBaseClass : MonoBehaviour
         onMoveHandler = handler;
     }
 
-    public virtual void Attack()
+    public abstract void Attack(Vector2 direction);
+
+    public virtual void Damage(int amount)
     {
-        Debug.Log(name + " has performed attack");
+        _health -= amount;
     }
 
     public void Stun()
