@@ -26,7 +26,9 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         CharacterBaseClass character = collision.GetComponent<CharacterBaseClass>();
-        if (character != null)
+        if (character == null)
+            Destroy(gameObject);
+        else
         {
             if ((_isFromHero && character is IMonster) || (!_isFromHero && character is IHero))
             {
