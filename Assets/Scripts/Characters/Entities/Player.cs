@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player main { get; private set; }
+
     [SerializeField] private int _maxHp = 100;
     private int _hp;
     [SerializeField] private int _hpScaling = 10;
 
     private void Awake()
     {
+        main = this;
         ResetHp();
     }
 
@@ -26,7 +29,6 @@ public class Player : MonoBehaviour
 
     public void Damage(int amount)
     {
-        print($"Taking damages: {amount}");
         if (amount < 0)
             return;
 

@@ -17,10 +17,16 @@ public class DungeonGenerator : MonoBehaviour
         _availableRooms = new List<RoomData>();
     }
 
-    public void GenerateDungeon(int roomNumber)
+    public List<Room> GenerateDungeon(int roomNumber)
     {
+        _roomList.Clear();
+        _availableRooms.Clear();
+
+        List<Room> roomList = new List<Room>();
         for (int i = 0; i < roomNumber; i++)
-            CreateRoom();
+            roomList.Add(CreateRoom());
+
+        return roomList;
     }
 
     private sealed class RoomData
@@ -28,6 +34,8 @@ public class DungeonGenerator : MonoBehaviour
         private Room _room;
         private List<Vector2> _freeSpaces;
         private Vector2 _position;
+
+        public Room Room { get => _room; }
         public Vector2 Position { get => _position; }
 
         public RoomData(Room room, Vector2 position)
@@ -77,7 +85,7 @@ public class DungeonGenerator : MonoBehaviour
         }
     }
 
-    public void CreateRoom()
+    public Room CreateRoom()
     {
         RoomData parentRoomData = null;
         Vector2 roomPosition;
@@ -106,19 +114,6 @@ public class DungeonGenerator : MonoBehaviour
 
         createdRoom.gameObject.name = "Room " + _roomList.Count;
 
-        /*foreach (RoomData roomData in _availableRooms.FindAll(room => room.IsNeighbour(roomPosition)))
-        {
-            DirectionLib.Direction doorDirection = DirectionLib.GetDirectionFromVector2(roomData.Position - createdRoomData.Position);
-            createdRoomData.AddExtension(roomData.Position);
-            createdRoom.gameObject.GetComponent<DoorAdapter>()?.SetDoor(_roomSize, doorDirection);
-
-            roomData.AddExtension(roomPosition);
-            roomData.GetDoorAdapter()?.SetDoor(_roomSize, DirectionLib.ReverseDirection(doorDirection));
-
-            if (!roomData.IsAvailableForExtension())
-                _availableRooms.Remove(roomData);
-        }*/
-
         if (parentRoomData != null)
         {
             foreach (RoomData neighbourData in _availableRooms.FindAll(room => room.IsNeighbour(roomPosition)))
@@ -137,5 +132,7 @@ public class DungeonGenerator : MonoBehaviour
             if (!parentRoomData.IsAvailableForExtension())
                 _availableRooms.Remove(parentRoomData);
         }
+
+        return createdRoom;
     }
 }

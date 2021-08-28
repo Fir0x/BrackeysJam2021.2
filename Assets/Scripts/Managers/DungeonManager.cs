@@ -6,17 +6,25 @@ public class DungeonManager : MonoBehaviour
 {
     public static DungeonManager main { get; private set; }
 
-    private List<Torch> _torches;
-    [SerializeField] private float _blackoutTime = 2;
 
     private DungeonGenerator _generator;
-    private int _level = 1;
+    private int _level = 0;
     [SerializeField] private int _roomIncrement = 3;
+    private List<Room> _roomList;
+
+    [SerializeField] private GameObject _torchPrefab;
+    [SerializeField] private GameObject _portalPrefab;
+    private List<Torch> _torchList;
+    [SerializeField] private float _blackoutTime = 2;
+
+    private Portal _portal;
 
     private void Awake()
     {
+        main = this;
         _generator = GetComponent<DungeonGenerator>();
-        _torches = new List<Torch>();
+        _roomList = new List<Room>();
+        _torchList = new List<Torch>();
     }
 
     private void Start()
@@ -26,7 +34,38 @@ public class DungeonManager : MonoBehaviour
 
     public void NewDungeon()
     {
-        _generator.GenerateDungeon(_level * _roomIncrement);
+        _roomList.ForEach(room => Destroy(room.gameObject));
+        _roomList.Clear();
+        _torchList.ForEach(torch => Destroy(torch.gameObject));
+        _torchList.Clear();
+
+        if (_portal != null)
+            Destroy(_portal);
+
+        _level++;
+        _roomList = _generator.GenerateDungeon(_level * _roomIncrement);
+        Player.main.transform.position = _roomList[0].transform.position;
+
+        _portal = Instantiate(_portalPrefab, (Vector2)_roomList[_roomList.Count - 1].transform.position + Vector2.one * 0.5f,
+                              Quaternion.identity).GetComponent<Portal>();
+
+        int remainingTorch = _roomList.Count / 2;
+        int remainingRoom = _roomList.Count - 2;
+        for (int i = 1; i < _roomList.Count - 1 && remainingTorch > 0; i++)
+        {
+            bool placeTorch = true;
+            if (_roomList.Count - 1 - i > remainingRoom)
+                placeTorch = Random.Range(0, 2) == 1;
+
+            if (placeTorch)
+            {
+                _torchList.Add(Instantiate(_torchPrefab, (Vector2)_roomList[i].transform.position + Vector2.one * 0.5f,
+                                           Quaternion.identity).GetComponent<Torch>());
+                remainingTorch--;
+            }
+
+            remainingRoom--;
+        }
     }
 
     public void Blackout()
@@ -36,8 +75,8 @@ public class DungeonManager : MonoBehaviour
 
     private IEnumerator PerformBlackout()
     {
-        _torches.ForEach(torch => torch.SwitchOff());
+        _torchList.ForEach(torch => torch.SwitchOff());
         yield return new WaitForSeconds(_blackoutTime);
-        _torches.ForEach(torch => torch.SwitchOn());
+        _torchList.ForEach(torch => torch.SwitchOn());
     }
 }
