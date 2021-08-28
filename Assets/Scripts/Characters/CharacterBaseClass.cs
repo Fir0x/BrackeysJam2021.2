@@ -7,7 +7,8 @@ public abstract class CharacterBaseClass : MonoBehaviour
 {
     [SerializeField] protected Animator _animator;
 
-    [SerializeField] protected int _health;
+    [SerializeField] protected int _startHealth;
+    protected int _health;
     [SerializeField] protected int _moveSpeed;
 
     [SerializeField] protected int _attack;
@@ -22,6 +23,11 @@ public abstract class CharacterBaseClass : MonoBehaviour
 
     protected Action<Vector2> onMoveHandler;
 
+    private void Awake()
+    {
+        _health = _startHealth;
+    }
+
     public void SubscribeOnMoveHandler(Action<Vector2> handler)
     {
         onMoveHandler = handler;
@@ -32,6 +38,11 @@ public abstract class CharacterBaseClass : MonoBehaviour
     public virtual void Damage(int amount)
     {
         _health -= amount;
+    }
+
+    public void Heal(int amount)
+    {
+        _health = (_health + amount) % _startHealth;
     }
 
     public void Stun()
