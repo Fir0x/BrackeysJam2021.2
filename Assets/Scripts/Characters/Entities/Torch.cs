@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class Torch : MonoBehaviour
 {
@@ -13,12 +14,12 @@ public class Torch : MonoBehaviour
     [SerializeField] private float _damageScaling = 0.5f;
 
     private float _lightingIntensity;
-    private Light _lighting;
+    private Light2D _lighting;
 
     private void Awake()
     {
         _pathfinder = GetComponent<Pathfinder>();
-        _lighting = GetComponent<Light>();
+        _lighting = GetComponent<Light2D>();
         _lightingIntensity = _lighting.intensity;
     }
 

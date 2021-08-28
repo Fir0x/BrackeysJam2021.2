@@ -19,6 +19,11 @@ public class DungeonManager : MonoBehaviour
         _torches = new List<Torch>();
     }
 
+    private void Start()
+    {
+        NewDungeon();
+    }
+
     public void NewDungeon()
     {
         _generator.GenerateDungeon(_level * _roomIncrement);
