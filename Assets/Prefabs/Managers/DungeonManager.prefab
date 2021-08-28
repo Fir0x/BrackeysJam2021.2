@@ -44,10 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ddc09d5fdb9ef4786da26cf82ffcbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomSize: {x: 9, y: 5}
-  _coreRoomPrefab: {fileID: 6485823302618685634, guid: 5a72f4f748a103d4b82164d6c2bd1c66, type: 3}
+  _roomSize: {x: 11, y: 8}
+  _coreRoomPrefab: {fileID: 8998050474080043448, guid: 792ec49d01b2e6c4aa78f1cda82bf6e9, type: 3}
   _roomPrefabs:
-  - {fileID: 6485823302618685634, guid: 5a72f4f748a103d4b82164d6c2bd1c66, type: 3}
+  - {fileID: 8998050474080043448, guid: 792ec49d01b2e6c4aa78f1cda82bf6e9, type: 3}
+  - {fileID: 8998050474080043448, guid: 89166e4a0071b0b438b8f8a06e67dff0, type: 3}
+  - {fileID: 8998050474080043448, guid: 73da411ea05411547a5f216a37c9220f, type: 3}
+  - {fileID: 8998050474080043448, guid: b5e473ef41766d34596dc026c2e0d9c5, type: 3}
+  - {fileID: 8998050474080043448, guid: 09200e62527be7745979b935dd161d28, type: 3}
 --- !u!114 &6488933864588998888
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,25 +13,14 @@ public class DungeonGenerator : MonoBehaviour
 
     private void Awake()
     {
-        Random.InitState(544572923);
         _roomList = new List<RoomData>();
         _availableRooms = new List<RoomData>();
     }
 
-    private void Start()
+    public void GenerateDungeon(int roomNumber)
     {
-        //CreateRoom();
-        StartCoroutine(RoomCreationTest());
-    }
-
-    private IEnumerator RoomCreationTest()
-    {
-        yield return new WaitForSeconds(2);
-        for (int i = 0; i < 50; i++)
-        {
+        for (int i = 0; i < roomNumber; i++)
             CreateRoom();
-            yield return null;
-        }
     }
 
     private sealed class RoomData

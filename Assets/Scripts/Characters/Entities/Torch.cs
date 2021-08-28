@@ -12,14 +12,29 @@ public class Torch : MonoBehaviour
     [SerializeField] private float _damageZoneRadius;
     [SerializeField] private float _damageScaling = 0.5f;
 
+    private float _lightingIntensity;
+    private Light _lighting;
+
     private void Awake()
     {
         _pathfinder = GetComponent<Pathfinder>();
+        _lighting = GetComponent<Light>();
+        _lightingIntensity = _lighting.intensity;
     }
 
     private void FindTarget()
     {
 
+    }
+
+    public void SwitchOn()
+    {
+        _lighting.intensity = _lightingIntensity;
+    }
+
+    public void SwitchOff()
+    {
+        _lighting.intensity = 0;
     }
 
     private void OnTriggerStay2D(Collider2D collision)

@@ -6,22 +6,22 @@ public class DungeonManager : MonoBehaviour
 {
     public static DungeonManager main { get; private set; }
 
-    [SerializeField] private Light _globalLight;
-    [SerializeField] private float _blackoutIntensity = 0.1f;
+    private List<Torch> _torches;
     [SerializeField] private float _blackoutTime = 2;
 
     private DungeonGenerator _generator;
-    private int _waveCount = 0;
+    private int _level = 1;
+    [SerializeField] private int _roomIncrement = 3;
 
     private void Awake()
     {
         _generator = GetComponent<DungeonGenerator>();
+        _torches = new List<Torch>();
     }
 
-    public void NextWave()
+    public void NewDungeon()
     {
-        _waveCount++;
-        print($"Wave {_waveCount} starts");
+        _generator.GenerateDungeon(_level * _roomIncrement);
     }
 
     public void Blackout()
@@ -31,9 +31,8 @@ public class DungeonManager : MonoBehaviour
 
     private IEnumerator PerformBlackout()
     {
-        float originalIntensity = _globalLight.intensity;
-        _globalLight.intensity = _blackoutIntensity;
+        _torches.ForEach(torch => torch.SwitchOff());
         yield return new WaitForSeconds(_blackoutTime);
-        _globalLight.intensity = originalIntensity;
+        _torches.ForEach(torch => torch.SwitchOn());
     }
 }
