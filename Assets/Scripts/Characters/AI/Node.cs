@@ -54,8 +54,8 @@ public partial class Pathfinder
             float distX = node.Position.x - otherPosition.x;
             float distY = node.Position.y - otherPosition.y;
 
-            return Mathf.Abs(distX) + Mathf.Abs(distY); // Manhattan distance
-            //return Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2)); // Euclidian distance
+            //return Mathf.Abs(distX) + Mathf.Abs(distY); // Manhattan distance
+            return Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2)); // Euclidian distance
 
             //distX = Mathf.Abs(distX);
             //distY = Mathf.Abs(distY);

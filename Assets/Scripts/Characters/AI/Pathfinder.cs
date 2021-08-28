@@ -73,7 +73,8 @@ public sealed partial class Pathfinder : MonoBehaviour
         _currentNodeIndex = -1;
         _path.Clear();
         MinHeap<Node> openSet = new MinHeap<Node>();
-        Node startNode = new Node(transform.position, _stepBetweenNode, _stopRange, _wallsMask);
+        Node startNode = new Node(transform.position, _stepBetweenNode, _stopRange, _wallsMask, 0, 0);
+        startNode.HCost = Node.Distance(startNode, targetPosition);
         openSet.Push(startNode);
         List<Node> closedSet = new List<Node>();
 
@@ -95,7 +96,7 @@ public sealed partial class Pathfinder : MonoBehaviour
                 if (closedSet.Contains(neighbour) || !neighbour.IsWalkable())
                     continue;
 
-                float distanceToNeighbour = Node.Distance(current, neighbour);
+                float distanceToNeighbour = current.GCost + Node.Distance(current, neighbour);
                 if (distanceToNeighbour < neighbour.GCost)
                 {
                     neighbour.GCost = distanceToNeighbour;
