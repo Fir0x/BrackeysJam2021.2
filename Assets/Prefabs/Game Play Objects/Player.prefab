@@ -199,6 +199,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHp: 100
   _hpScaling: 10
+  _autoDamageTime: 1
+  _autoDamage: 2
+  _blackoutCost: 20
+  _soulIncrement: 1
+  _soulIncrementTime: 1
 --- !u!114 &956621654
 MonoBehaviour:
   m_ObjectHideFlags: 0

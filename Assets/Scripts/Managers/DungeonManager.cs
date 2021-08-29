@@ -8,7 +8,6 @@ public class DungeonManager : MonoBehaviour
 
 
     private DungeonGenerator _generator;
-    private int _level = 0;
     [SerializeField] private int _roomIncrement = 3;
     [SerializeField] private float _incrementFactor = 1.5f;
     private int _roomCount = 0;
@@ -72,7 +71,7 @@ public class DungeonManager : MonoBehaviour
 
     public void Blackout()
     {
-        PerformBlackout();
+        StartCoroutine(PerformBlackout());
     }
 
     private IEnumerator PerformBlackout()

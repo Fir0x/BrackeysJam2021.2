@@ -525,17 +525,9 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6424494615757845900, guid: e36536ef18afc9241a485b91921a8889, type: 3}
-      propertyPath: _autoDamage
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6424494615757845900, guid: e36536ef18afc9241a485b91921a8889, type: 3}
       propertyPath: _healthManager
       value: 
       objectReference: {fileID: 1862728579}
-    - target: {fileID: 6424494615757845900, guid: e36536ef18afc9241a485b91921a8889, type: 3}
-      propertyPath: _autoDamageTime
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e36536ef18afc9241a485b91921a8889, type: 3}
 --- !u!1001 &1183283092

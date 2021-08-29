@@ -108,6 +108,9 @@ public class Torch : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (_lighting.intensity == 0)
+            return;
+
         Player player = collision.GetComponent<Player>();
         if (player != null)
         {

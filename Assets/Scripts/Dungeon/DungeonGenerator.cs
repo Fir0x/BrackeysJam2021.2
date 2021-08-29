@@ -63,7 +63,6 @@ public class DungeonGenerator : MonoBehaviour
         public void AddExtension(Vector2 extensionPosition)
         {
             _freeSpaces.Remove(extensionPosition);
-            //print($"{_room.gameObject.name} has {_freeSpaces.Count} free spaces left");
         }
 
         public Vector2 GetRandomFreeSpace()
