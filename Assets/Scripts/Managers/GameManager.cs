@@ -49,11 +49,11 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
-        if (_level == 2)
+        /*if (_level == 2)
         {
             Win();
             return;
-        }
+        }*/
 
         _level++;
         _levelDisplay.text = "Level:\n" + _level;
