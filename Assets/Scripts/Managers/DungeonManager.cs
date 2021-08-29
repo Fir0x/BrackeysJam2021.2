@@ -45,7 +45,7 @@ public class DungeonManager : MonoBehaviour
             Player.main.UpgradePlayer();
 
         _roomCount = (int)(_incrementFactor * _roomCount) + _roomIncrement;
-        _roomList = _generator.GenerateDungeon(3);
+        _roomList = _generator.GenerateDungeon(_roomCount);
         Player.main.transform.position = _roomList[0].transform.position;
 
         _portal = Instantiate(_portalPrefab, (Vector2)_roomList[_roomList.Count - 1].transform.position + Vector2.one * 0.5f,

@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject losePanel;
-    [SerializeField] private GameObject winPanel;
-    [SerializeField] private GameObject pausePanel;
-    [SerializeField] private GameObject pauseButton;
+    [SerializeField] private GameObject losePanel = null;
+    [SerializeField] private GameObject winPanel = null;
+    [SerializeField] private GameObject pausePanel = null;
+    [SerializeField] private GameObject pauseButton = null;
     [SerializeField] private TMPro.TextMeshProUGUI _levelDisplay;
 
     private int _level = 0;
@@ -23,42 +23,55 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        losePanel.SetActive(false);
-        winPanel.SetActive(false);
-        pausePanel.SetActive(false);
-        pauseButton.SetActive(true);
+        if (losePanel != null)
+            losePanel.SetActive(false);
+
+        if (winPanel != null)
+            winPanel.SetActive(false);
+
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+
+        if (pauseButton != null)
+            pauseButton.SetActive(true);
     }
 
     public void GoToMainMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
     public void GoToGame()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(1);
     }
 
     public void NextLevel()
     {
+        if (_level == 2)
+        {
+            Win();
+            return;
+        }
+
         _level++;
-        DungeonManager.main.NewDungeon(true);
         _levelDisplay.text = "Level:\n" + _level;
+        DungeonManager.main.NewDungeon(true);
     }
     
     public void Loss()
     {
+        Time.timeScale = 0;
         losePanel.SetActive(true);
         AudioManager.main.PlaySoundEffect(SoundEffects.loss);
-        //play sound indicating loss
-        //do all the other things for loss
     }
 
     public void Win()
     {
+        Time.timeScale = 0;
         winPanel.SetActive(true);
         AudioManager.main.PlaySoundEffect(SoundEffects.win);
-        //play sound indicating loss
-        //do all the other things for win
     }
 
     public void Pause()

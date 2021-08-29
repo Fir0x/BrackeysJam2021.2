@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
     [SerializeField] private int _maxHp = 100;
     private int _hp;
     [SerializeField] private int _hpScaling = 10;
+    [SerializeField] private float _autoDamageTime = 1f;
+    [SerializeField] private int _autoDamage = 2;
+    private float _lastAutoDamage = 0;
 
     private void Awake()
     {
@@ -50,5 +53,14 @@ public class Player : MonoBehaviour
     private void Death()
     {
         GameManager.main.Loss();
+    }
+
+    private void Update()
+    {
+        if (Time.time - _lastAutoDamage >= _autoDamageTime)
+        {
+            _lastAutoDamage = Time.time;
+            Damage(_autoDamage);
+        }
     }
 }
