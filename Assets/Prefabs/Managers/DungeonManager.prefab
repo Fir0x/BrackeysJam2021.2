@@ -65,6 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _roomIncrement: 3
+  _incrementFactor: 1
   _torchPrefab: {fileID: 2690880320697673066, guid: 01564d53e75aaeb42a8e2ca24e632ddb, type: 3}
   _portalPrefab: {fileID: 3324580337488942022, guid: 74529d478bbf228459d9090752a1aae9, type: 3}
   _blackoutTime: 2

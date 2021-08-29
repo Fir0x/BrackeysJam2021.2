@@ -16,10 +16,16 @@ public class Player : MonoBehaviour
         ResetHp();
     }
 
+    private void Start()
+    {
+        HealthManager.main.SetMaxHealth(_maxHp);
+    }
+
     public void UpgradePlayer()
     {
         _maxHp += _hpScaling;
         ResetHp();
+        HealthManager.main.SetMaxHealth(_maxHp);
     }
 
     private void ResetHp()
@@ -33,12 +39,16 @@ public class Player : MonoBehaviour
             return;
 
         _hp -= amount;
-        if (_hp <= 0)
+        _hp = _hp < 0 ? 0 : _hp;
+
+        HealthManager.main.UpdateHealthBar(_hp);
+
+        if (_hp == 0)
             Death();
     }
 
     private void Death()
     {
-        throw new System.NotImplementedException();
+        GameManager.main.Loss();
     }
 }

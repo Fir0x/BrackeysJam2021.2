@@ -8,6 +8,9 @@ public class Portal : MonoBehaviour
     {
         print("collide");
         if (collision.GetComponent<Player>() != null)
-            DungeonManager.main.NewDungeon();
+        {
+            GameManager.main.NextLevel();
+            Destroy(gameObject);
+        }
     }
 }

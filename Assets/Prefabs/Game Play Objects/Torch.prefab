@@ -104,10 +104,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d375d911261ca4fb2c2e8a7bda708c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetSearchRange: 0
+  _speed: 2
   _startDamage: 1
   _damageZoneRadius: 1.8
   _damageScaling: 1.5
+  _minSearchDistance: 5
+  _maxSearchDistance: 10
+  _roomMask:
+    serializedVersion: 2
+    m_Bits: 256
+  _collisionMask:
+    serializedVersion: 2
+    m_Bits: 192
+  circle: {fileID: 0}
+  _debug: 1
 --- !u!114 &4989238502493766169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,13 +130,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 828be4a7a40eaeb419c96433ee62e344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nodePerUnit: 1
+  _nodePerUnit: 3
   _wallsMask:
     serializedVersion: 2
     m_Bits: 192
   _stopRange: 0.5
+  _entitySize: {x: 0.5, y: 0.7}
   _debug: 1
   _nodeSize: 0.1
+  _boundsColor: {r: 1, g: 0, b: 0, a: 1}
   _nodeColor: {r: 0, g: 1, b: 0, a: 1}
   _linkColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &2690880321825570156

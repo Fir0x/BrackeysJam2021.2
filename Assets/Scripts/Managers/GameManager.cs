@@ -9,8 +9,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject pauseButton;
+    [SerializeField] private TMPro.TextMeshProUGUI _levelDisplay;
+
+    private int _level = 0;
 
     public static GameManager main;
+
+    private void Awake()
+    {
+        main = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,12 +29,6 @@ public class GameManager : MonoBehaviour
         pauseButton.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void GoToMainMenu()
     {
         SceneManager.LoadScene(0);
@@ -33,6 +36,13 @@ public class GameManager : MonoBehaviour
     public void GoToGame()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void NextLevel()
+    {
+        _level++;
+        DungeonManager.main.NewDungeon(true);
+        _levelDisplay.text = "Level:\n" + _level;
     }
     
     public void Loss()

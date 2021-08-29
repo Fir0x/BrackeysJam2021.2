@@ -6,40 +6,25 @@ using UnityEngine.UI;
 public class HealthManager : MonoBehaviour
 {
 
-    [SerializeField] private int startHealth;
+    private int _maxHealth;
     [SerializeField] private Slider healthBar;
-    private int currentHealth;
-    
-    
-    
     
     public static HealthManager main;
-    
-    
-    
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
-        currentHealth = startHealth;
+        main = this;
     }
 
-    public void ReduceHealth(int reduction)
+    public void SetMaxHealth(int maxHealth)
     {
-        currentHealth= Mathf.Max(currentHealth-reduction,0);
-        if(currentHealth<=0)GameManager.main.Loss();
-        UpdateBar();
+        _maxHealth = maxHealth;
+        UpdateHealthBar(100);
     }
 
-    public void IncreaseHealth(int addition)
+    public void UpdateHealthBar(int health)
     {
-        currentHealth =Mathf.Min(currentHealth+addition,startHealth);
-        UpdateBar();
-        
-    }
-
-    void UpdateBar()
-    {
-        healthBar.value = currentHealth;
+        healthBar.value = (float)health / _maxHealth * 100f;
     }
     
     

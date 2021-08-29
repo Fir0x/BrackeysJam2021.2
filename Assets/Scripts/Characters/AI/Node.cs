@@ -27,17 +27,17 @@ public partial class Pathfinder
         }
 
         private float _step;
-        private float _checkRadius;
+        private Vector2 _entitySize;
         private LayerMask _checkMask;
 
         private List<Node> _neighbours;
 
-        public Node(Vector2 position, float step, float checkRadius, LayerMask checkMask,
+        public Node(Vector2 position, float step, Vector2 entitySize, LayerMask checkMask,
                     float weight = 0, float gCost = Mathf.Infinity, float hCost = Mathf.Infinity)
         {
             _position = position;
             _step = step;
-            _checkRadius = checkRadius;
+            _entitySize = entitySize;
             _checkMask = checkMask;
             _weight = weight;
             _gCost = gCost;
@@ -65,7 +65,7 @@ public partial class Pathfinder
 
         public bool IsWalkable()
         {
-            return Physics2D.OverlapCircle(_position, _checkRadius, _checkMask) == null;
+            return Physics2D.OverlapBox(_position, _entitySize, 0, _checkMask) == null;
         }
 
         public List<Node> GetNeighbours()
@@ -83,7 +83,7 @@ public partial class Pathfinder
                             if (x == 0 && y == 0)
                                 continue;
 
-                            Node neighbour = new Node(new Vector2(_position.x + x, _position.y + y), _step, _checkRadius, _checkMask);
+                            Node neighbour = new Node(new Vector2(_position.x + x, _position.y + y), _step, _entitySize, _checkMask);
                             _neighbours.Add(neighbour);
                             i++;
                         }

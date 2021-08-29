@@ -11,6 +11,9 @@ public sealed partial class Pathfinder : MonoBehaviour
     [SerializeField] private float _nodePerUnit = 1;
     [SerializeField] private LayerMask _wallsMask;
     [SerializeField] private float _stopRange = 0.5f;
+    [SerializeField] private Vector2 _entitySize = Vector2.one;
+
+    public Vector2 EntitySize { get => _entitySize; }
 
     private float _stepBetweenNode { get => 1f / _nodePerUnit; }
 
@@ -44,6 +47,9 @@ public sealed partial class Pathfinder : MonoBehaviour
 
     public bool IsPositionNearNextNode(Vector2 positon)
     {
+        if (_currentNodeIndex < 0 || _currentNodeIndex >= _path.Count)
+            return false;
+
         return ArePositionClose(positon, _path[_currentNodeIndex]);
     }
 
@@ -62,12 +68,12 @@ public sealed partial class Pathfinder : MonoBehaviour
         }
     }
 
-    public void FindPath(Vector2 targetPosition)
+    public bool FindPath(Vector2 targetPosition)
     {
         _currentNodeIndex = -1;
         _path.Clear();
         MinHeap<Node> openSet = new MinHeap<Node>();
-        Node startNode = new Node(transform.position, _stepBetweenNode, _stopRange, _wallsMask, 0, 0);
+        Node startNode = new Node(transform.position, _stepBetweenNode, _entitySize, _wallsMask, 0, 0);
         startNode.HCost = Node.Distance(startNode, targetPosition);
         openSet.Push(startNode);
         List<Node> closedSet = new List<Node>();
@@ -80,7 +86,7 @@ public sealed partial class Pathfinder : MonoBehaviour
             if (ArePositionClose(current.Position, targetPosition))
             {
                 ReconstructPath(startNode, current);
-                return;
+                return true;
             }
 
             closedSet.Add(current);
@@ -104,30 +110,38 @@ public sealed partial class Pathfinder : MonoBehaviour
             }
         }
 
-        Debug.Log($"No path was found for {gameObject.name} (id: {gameObject.GetInstanceID()}) " +
-                         $"from {transform.position} to {targetPosition}");
+        //Debug.Log($"No path was found for {gameObject.name} (id: {gameObject.GetInstanceID()}) " +
+        //                 $"from {transform.position} to {targetPosition}");
+
+        return false;
     }
 
 #if UNITY_EDITOR
     [Header("Debug")]
     [SerializeField] private bool _debug = true;
     [SerializeField] private float _nodeSize = 0.1f;
+    [SerializeField] private Color _boundsColor = Color.red;
     [SerializeField] private Color _nodeColor = Color.green;
     [SerializeField] private Color _linkColor = Color.green;
 
     private void OnDrawGizmos()
     {
-        if (_debug && _path != null)
+        if (_debug)
         {
-            Vector2 prevPos = transform.position;
-            for (int i = _currentNodeIndex == -1 ? 0 : _currentNodeIndex; i < _path.Count; i++)
+            Gizmos.color = _boundsColor;
+            Gizmos.DrawWireCube(transform.position, _entitySize);
+            if (_path != null)
             {
-                Vector2 nextPos = _path[i];
-                Gizmos.color = _nodeColor;
-                Gizmos.DrawSphere(nextPos, _nodeSize);
-                Gizmos.color = _linkColor;
-                Gizmos.DrawLine(prevPos, nextPos);
-                prevPos = nextPos;
+                Vector2 prevPos = transform.position;
+                for (int i = _currentNodeIndex == -1 ? 0 : _currentNodeIndex; i < _path.Count; i++)
+                {
+                    Vector2 nextPos = _path[i];
+                    Gizmos.color = _nodeColor;
+                    Gizmos.DrawSphere(nextPos, _nodeSize);
+                    Gizmos.color = _linkColor;
+                    Gizmos.DrawLine(prevPos, nextPos);
+                    prevPos = nextPos;
+                }
             }
         }
     }

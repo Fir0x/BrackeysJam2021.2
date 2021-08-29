@@ -10,6 +10,8 @@ public class DungeonManager : MonoBehaviour
     private DungeonGenerator _generator;
     private int _level = 0;
     [SerializeField] private int _roomIncrement = 3;
+    [SerializeField] private float _incrementFactor = 1.5f;
+    private int _roomCount = 0;
     private List<Room> _roomList;
 
     [SerializeField] private GameObject _torchPrefab;
@@ -29,21 +31,21 @@ public class DungeonManager : MonoBehaviour
 
     private void Start()
     {
-        NewDungeon();
+        NewDungeon(false);
     }
 
-    public void NewDungeon()
+    public void NewDungeon(bool upgradePlayer)
     {
         _roomList.ForEach(room => Destroy(room.gameObject));
         _roomList.Clear();
         _torchList.ForEach(torch => Destroy(torch.gameObject));
         _torchList.Clear();
 
-        if (_portal != null)
-            Destroy(_portal);
+        if (upgradePlayer)
+            Player.main.UpgradePlayer();
 
-        _level++;
-        _roomList = _generator.GenerateDungeon(_level * _roomIncrement);
+        _roomCount = (int)(_incrementFactor * _roomCount) + _roomIncrement;
+        _roomList = _generator.GenerateDungeon(3);
         Player.main.transform.position = _roomList[0].transform.position;
 
         _portal = Instantiate(_portalPrefab, (Vector2)_roomList[_roomList.Count - 1].transform.position + Vector2.one * 0.5f,
